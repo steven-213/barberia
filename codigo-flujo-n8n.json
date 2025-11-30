@@ -1,0 +1,1025 @@
+{
+  "name": "agendamiento citas",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://bsmejavaoambjdtpktgw.supabase.co/rest/v1/citas",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzbWVqYXZhb2FtYmpkdHBrdGd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MzM4NjIsImV4cCI6MjA3OTUwOTg2Mn0.JR1voF8y-RT3tFJk962LypOIcnP0m6852fgy_I0QJ5c"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzbWVqYXZhb2FtYmpkdHBrdGd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5MzM4NjIsImV4cCI6MjA3OTUwOTg2Mn0.JR1voF8y-RT3tFJk962LypOIcnP0m6852fgy_I0QJ5c"
+            },
+            {
+              "name": "Prefer",
+              "value": "return=representation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "cliente",
+              "value": "={{ $json.nombre }}"
+            },
+            {
+              "name": "fecha",
+              "value": "={{ $json.fecha}}"
+            },
+            {
+              "name": "hora",
+              "value": "={{ $json.hora}}"
+            },
+            {
+              "name": "servicio",
+              "value": "={{ $json.servicio }}"
+            },
+            {
+              "name": "nota"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1728,
+        -576
+      ],
+      "id": "43fb7f96-0545-46f0-bed9-c5142347136a",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "834980633039455",
+        "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+        "textBody": "={{ $json.body }}{{ $json.mensaje }}",
+        "additionalFields": {
+          "previewUrl": false
+        }
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        912,
+        -960
+      ],
+      "id": "42f89112-c699-4bed-a06b-e7433b92a081",
+      "name": "Send message2",
+      "webhookId": "4edc69be-e6d3-4dbe-a4de-6f78458e00ef",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "APYdnOOO8G2cuTQI",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4179187c-9a8d-4ce1-a480-4e0df8a51573",
+              "leftValue": "={{ $json.opciones }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1184,
+        -1280
+      ],
+      "id": "f05d2353-5633-4309-bc12-330575046129",
+      "name": "If14"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "mKhLKToHc6pcxXAC",
+          "mode": "list",
+          "cachedResultName": "citass",
+          "cachedResultUrl": "/projects/jYCrnJlfY5f5hEpT/datatables/mKhLKToHc6pcxXAC"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "servicio": "={{ $('Code in JavaScript4').item.json.opciones }}",
+            "procesado": false
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "nombre",
+              "displayName": "nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "servicio",
+              "displayName": "servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "fecha",
+              "displayName": "fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "hora",
+              "displayName": "hora",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "procesado",
+              "displayName": "procesado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1424,
+        -1296
+      ],
+      "id": "c17e4079-3901-47c1-9d35-fd52555ce463",
+      "name": "Insert row5"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "mKhLKToHc6pcxXAC",
+          "mode": "list",
+          "cachedResultName": "citass",
+          "cachedResultUrl": "/projects/jYCrnJlfY5f5hEpT/datatables/mKhLKToHc6pcxXAC"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "fecha": "={{ $('Code in JavaScript4').item.json.fecha }}",
+            "procesado": false
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "nombre",
+              "displayName": "nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "servicio",
+              "displayName": "servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "fecha",
+              "displayName": "fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "hora",
+              "displayName": "hora",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "procesado",
+              "displayName": "procesado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "optimizeBulk": false
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1424,
+        -1152
+      ],
+      "id": "b9a3d207-d35d-4ebb-9a65-d909bce77294",
+      "name": "Insert row6"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a484f519-0e94-4782-b770-aa605f59d57c",
+              "leftValue": "={{ $json.fecha }}",
+              "rightValue": "1",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1184,
+        -1136
+      ],
+      "id": "9550d25d-d92c-43a4-9495-8f8fc5b8c1a1",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a484f519-0e94-4782-b770-aa605f59d57c",
+              "leftValue": "={{ $json.agradecimiento }}",
+              "rightValue": "1",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        912,
+        -1104
+      ],
+      "id": "bc31408f-d8fb-492c-8683-fbac262303b7",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "mKhLKToHc6pcxXAC",
+          "mode": "list",
+          "cachedResultName": "citass",
+          "cachedResultUrl": "/projects/jYCrnJlfY5f5hEpT/datatables/mKhLKToHc6pcxXAC"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "procesado",
+              "condition": "isFalse"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        -752
+      ],
+      "id": "0ca224c6-1e60-4c70-afc4-756af1474687",
+      "name": "Get row(s)2",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $input.all();\nconst combined = [];\nlet lastServicio = null;\nlet lastFecha = null;\nlet lastHora = null;\n\nfor (const row of rows) {\n    const data = row.json;\n\n    if (data.servicio) {\n        lastServicio = data.servicio;\n    }\n\n    if (data.fecha) {\n        lastFecha = data.fecha;\n    }\n\n    if (data.hora) {\n        lastHora = data.hora;\n    }\n\n    // Solo combinar si ya tenemos los 3 datos\n    if (lastServicio && lastFecha && lastHora) {\n\n        // Convertir fecha a YYYY-MM-DD\n        let fechaSQL = lastFecha;\n        if (fechaSQL.includes('/')) {\n            const parts = fechaSQL.split('/');\n            if (parts.length === 3) {\n                fechaSQL = `${parts[2]}-${parts[1]}-${parts[0]}`;\n            }\n        }\n\n        combined.push({\n            json: {\n                fecha: fechaSQL,\n                hora: lastHora,\n                servicio: lastServicio,\n                nombre: $('Insert row8').first().json.nombre,\n            }\n        });\n\n        // Resetear\n        lastServicio = null;\n        lastFecha = null;\n        lastHora = null;\n    }\n}\n\nreturn combined;\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        -752
+      ],
+      "id": "a60ce404-ab7b-4596-9ad6-213ed086cc98",
+      "name": "Code in JavaScript5",
+      "alwaysOutputData": true,
+      "executeOnce": false,
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "rsraVXl1wQZW6a6V",
+          "mode": "list",
+          "cachedResultName": "citas_completa",
+          "cachedResultUrl": "/projects/jYCrnJlfY5f5hEpT/datatables/rsraVXl1wQZW6a6V"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "fecha": "={{$json.fecha}}",
+            "servicio": "={{$json.servicio}}",
+            "hora": "={{ $json.hora }}",
+            "nombre": "={{ $json.nombre }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "nombre",
+              "displayName": "nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "servicio",
+              "displayName": "servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "fecha",
+              "displayName": "fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "hora",
+              "displayName": "hora",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1712,
+        -752
+      ],
+      "id": "ffe3f487-26e6-4849-94d7-fa31af235da9",
+      "name": "Insert tabla_completa2",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "mKhLKToHc6pcxXAC",
+          "mode": "list",
+          "cachedResultName": "citass",
+          "cachedResultUrl": "/projects/jYCrnJlfY5f5hEpT/datatables/mKhLKToHc6pcxXAC"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "procesado",
+              "condition": "isFalse"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "procesado": true
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "fecha",
+              "displayName": "fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "servicio",
+              "displayName": "servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "procesado",
+              "displayName": "procesado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        -512
+      ],
+      "id": "3c6c5512-7e41-41c0-bbc4-6f834bb1135b",
+      "name": "Update row(s)2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a484f519-0e94-4782-b770-aa605f59d57c",
+              "leftValue": "={{ $json.hora }}",
+              "rightValue": "1",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1168,
+        -1472
+      ],
+      "id": "7a9aaf31-e4e4-41df-8f38-4dbd100fd8bf",
+      "name": "If15"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "mKhLKToHc6pcxXAC",
+          "mode": "list",
+          "cachedResultName": "citass",
+          "cachedResultUrl": "/projects/jYCrnJlfY5f5hEpT/datatables/mKhLKToHc6pcxXAC"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "hora": "={{ $('Code in JavaScript4').item.json.hora }}",
+            "procesado": false
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "nombre",
+              "displayName": "nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "servicio",
+              "displayName": "servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "fecha",
+              "displayName": "fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "hora",
+              "displayName": "hora",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "procesado",
+              "displayName": "procesado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1424,
+        -1488
+      ],
+      "id": "9942b3de-c239-49b4-b984-7de02f2af21b",
+      "name": "Insert row7"
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "mKhLKToHc6pcxXAC",
+          "mode": "list",
+          "cachedResultName": "citass",
+          "cachedResultUrl": "/projects/jYCrnJlfY5f5hEpT/datatables/mKhLKToHc6pcxXAC"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "procesado": false,
+            "nombre": "={{ $('If5').item.json.nombre }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "nombre",
+              "displayName": "nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "servicio",
+              "displayName": "servicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "fecha",
+              "displayName": "fecha",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "hora",
+              "displayName": "hora",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "procesado",
+              "displayName": "procesado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        -976
+      ],
+      "id": "604617c0-ad0c-42ba-9025-47ec146e891b",
+      "name": "Insert row8"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4179187c-9a8d-4ce1-a480-4e0df8a51573",
+              "leftValue": "={{ $json.nombre }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": "=",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1168,
+        -960
+      ],
+      "id": "c054a269-791c-45d9-8e4c-ed35eb310a64",
+      "name": "If16"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        416,
+        -1072
+      ],
+      "id": "2ae19d92-9dc3-49d7-9c79-0115e7d0a6dc",
+      "name": "WhatsApp Trigger",
+      "webhookId": "836802fe-fd44-4575-af81-61ff1d8a1f5d",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "Ii6qeEgfaZsvoKAp",
+          "name": "WhatsApp OAuth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraer mensaje\nlet mensajeUsuario = $input.first().json.messages[0].text.body;\nlet remitente = $input.first().json.messages[0].from;\n\n// Normalizar\nmensajeUsuario = mensajeUsuario.toLowerCase().trim();\n\n// Variables\nlet mensaje = \"Hola, ¿cómo estás? ¿Quieres agendar una cita? (si/no)\";\nlet opciones = null;\nlet fecha = null;\nlet hora = null;\nlet nombre = null;\nlet agradecimiento = false;\n\n// Regex\nlet regexFecha = /^([0-2]?[0-9]|3[0-1])\\/(0?[1-9]|1[0-2])\\/\\d{4}$/;\nlet regexHora = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/;\n\n// Regex de nombre (solo si el usuario lo escribe explícitamente)\nlet regexNombre = /^(nombre[: ]+|mi nombre es |soy )(.+)$/i;\n\n// ----------------------------------------------------\n// Paso 1: servicio\n// ----------------------------------------------------\nif (mensajeUsuario === \"si\") {\n    mensaje = \"Perfecto, ¿qué servicio deseas? \\n1. peluquiada\\n2. barba\\n3. uñas\";\n}\n\nelse if (mensajeUsuario === \"1\" || mensajeUsuario === \"peluquiada\") {\n    opciones = \"peluquiada\";\n    mensaje = \"Has elegido peluquiada. ¿Qué día deseas agendar? \\nEjemplo: 02/12/2025\";\n}\n\nelse if (mensajeUsuario === \"2\" || mensajeUsuario === \"barba\") {\n    opciones = \"barba\";\n    mensaje = \"Has elegido barba. ¿Qué día deseas agendar? \\nEjemplo: 02/12/2025\";\n}\n\nelse if (mensajeUsuario === \"3\" || mensajeUsuario === \"uñas\" || mensajeUsuario === \"unas\") {\n    opciones = \"uñas\";\n    mensaje = \"Has elegido uñas. ¿Qué día deseas agendar? \\nEjemplo: 02/12/2025\";\n}\n\nelse if (mensajeUsuario === \"no\") {\n    mensaje = \"Perfecto, si necesitas algo estaré por aquí. 😁\";\n}\n\n// ----------------------------------------------------\n// Paso 2: fecha\n// ----------------------------------------------------\nelse if (regexFecha.test(mensajeUsuario)) {\n    fecha = mensajeUsuario;\n    mensaje = `Perfecto, tu cita quedó programada para el ${fecha}. Ahora dime a qué hora te gustaría. 😁`;\n}\n\n// ----------------------------------------------------\n// Paso 3: hora\n// ----------------------------------------------------\nelse if (regexHora.test(mensajeUsuario)) {\n    hora = mensajeUsuario + \":00\";\n    mensaje = `Genial, tu cita quedó agendada para las ${hora}. Ahora dime tu nombre escribiendo:\\n\\n👉  nombre: tu nombre aquí`;\n    agradecimiento = false;\n}\n\n// ----------------------------------------------------\n// Paso 4: nombre SOLO si viene explícito\n// ----------------------------------------------------\nelse if (regexNombre.test(mensajeUsuario)) {\n    nombre = mensajeUsuario.replace(regexNombre, \"$2\").trim();\n    mensaje = `Perfecto ${nombre}, tu cita ha quedado agendada. ¡Te esperamos! 😁`;\n    agradecimiento = true;\n}\n\n// ----------------------------------------------------\n// Cualquier otra cosa NO es válida en este punto\n// ----------------------------------------------------\nelse {\n    mensaje = \"Hola, ¿cómo estás? ¿Quieres agendar una cita? (si/no)\";\n}\n\n// ----------------------------------------------------\n// Respuesta\n// ----------------------------------------------------\nreturn [\n  {\n    json: {\n      fecha,\n      hora,\n      nombre,\n      opciones,\n      body: mensaje,\n      agradecimiento,\n      mensajeUsuario,\n      to: remitente\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        656,
+        -1056
+      ],
+      "id": "ee45a103-fcaa-4327-86da-46d1b123abc9",
+      "name": "Code in JavaScript4"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extraer mensaje\nlet mensajeUsuario = $input.first().json.messages[0].text.body;\n\n// Extraer número del usuario\nlet remitente = $input.first().json.messages[0].from;\n\n// Normalizar texto\nmensajeUsuario = mensajeUsuario.toLowerCase().trim();\n\n// Variables de salida\nlet mensaje = \"Hola, ¿cómo estás? ¿Quieres agendar una cita? (si/no)\";\nlet opciones = null;\nlet fecha = null;  // string cuando haya fecha\nlet dia = null;\nlet mes = null;\nlet año = null;\nlet hora = null;  // NUEVA VARIABLE\nlet agradecimiento = false;\n\n// ----------------------------------------------------\n// Lógica de conversación\n// ----------------------------------------------------\n\nif (mensajeUsuario === \"si\") {\n  mensaje = \"Perfecto, ¿qué servicio deseas? \\n1. peluquiada\\n2. barba\\n3. uñas\";\n} else if (mensajeUsuario === \"1\" || mensajeUsuario === \"peluquiada\") {\n  mensaje = \"Has elegido peluquiada. ¿Qué día deseas agendar? \\nEjemplo: 02/12/2025\";\n  opciones = \"peluquiada\";\n} else if (mensajeUsuario === \"2\" || mensajeUsuario === \"barba\") {\n  mensaje = \"Has elegido barba. ¿Qué día deseas agendar? \\nEjemplo: 02/12/2025\";\n  opciones = \"barba\";\n} else if (mensajeUsuario === \"3\" || [\"uñas\", \"unas\"].includes(mensajeUsuario)) {\n  mensaje = \"Has elegido uñas. ¿Qué día deseas agendar? \\nEjemplo: 02/12/2025\";\n  opciones = \"uñas\";\n} else if (mensajeUsuario === \"no\") {\n  mensaje = \"Perfecto, si necesitas algo estaré por aquí. 😁\";\n}\n\n// ----------------------------------------------------\n// Detección de fecha y hora\n// Formato fecha: dd/mm/aaaa\n// Formato hora: hh:mm (24h)\n// ----------------------------------------------------\nlet regexFecha = /^([0-2]?[0-9]|3[0-1])\\/(0?[1-9]|1[0-2])\\/\\d{4}$/;\nlet regexHora = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/;\n\nif (regexFecha.test(mensajeUsuario)) {\n  let partes = mensajeUsuario.split(\"/\");\n  dia = partes[0];\n  mes = partes[1];\n  año = partes[2];\n  fecha = `${dia}/${mes}/${año}`;\n  agradecimiento = false;\n  mensaje = `Perfecto, tu cita quedó programada para el ${fecha}. Ahora dime a qué hora te gustaría. 😁`;\n} else if (regexHora.test(mensajeUsuario)) {\n  hora = mensajeUsuario + \":00\";\n  mensaje = `Genial, tu cita quedó agendada para las ${hora}. ¡Te esperamos! 😁`;\n  agradecimiento = true;\n}\n\n// ----------------------------------------------------\n// Respuesta al nodo HTTP\n// ----------------------------------------------------\nreturn [\n  {\n    json: {\n      fecha: fecha,\n      dia: dia,\n      mes: mes,\n      año: año,\n      hora: hora,             // enviamos la hora también\n      to: remitente,\n      body: mensaje,\n      opciones: opciones,\n      mensajeUsuario: mensajeUsuario,\n      agradecimiento: agradecimiento\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        528,
+        -768
+      ],
+      "id": "e3f4df54-ba4a-4c5e-af3d-b27132b376d0",
+      "name": "Code in JavaScript6"
+    }
+  ],
+  "pinData": {
+    "WhatsApp Trigger": [
+      {
+        "json": {
+          "messaging_product": "whatsapp",
+          "metadata": {
+            "display_phone_number": "15551716544",
+            "phone_number_id": "834980633039455"
+          },
+          "statuses": [
+            {
+              "id": "wamid.HBgMNTczMTM0MzYzNDkyFQIAERgSNUYwMTE4MDlFOURDRTEyOTJCAA==",
+              "status": "read",
+              "timestamp": "1764485620",
+              "recipient_id": "573134363492",
+              "pricing": {
+                "billable": false,
+                "pricing_model": "PMP",
+                "category": "service",
+                "type": "free_customer_service"
+              }
+            }
+          ],
+          "field": "messages"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "If14": {
+      "main": [
+        [
+          {
+            "node": "Insert row5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Insert row6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "If14",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If15",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)2": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Update row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript5": {
+      "main": [
+        [
+          {
+            "node": "Insert tabla_completa2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If15": {
+      "main": [
+        [
+          {
+            "node": "Insert row7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert row7": {
+      "main": [
+        []
+      ]
+    },
+    "If16": {
+      "main": [
+        [
+          {
+            "node": "Insert row8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert row8": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript4": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript6": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "3966a0ee-4bb0-4bb7-ac54-f4696dca6129",
+  "meta": {
+    "instanceId": "194c9ab31b9f67fb51ed602c590930cd896522366fff7c68acf30ad7de3b2b16"
+  },
+  "id": "Nfo1d11xNp6fOZei",
+  "tags": []
+}
