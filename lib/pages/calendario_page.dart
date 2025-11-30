@@ -15,26 +15,45 @@ class _CalendarioCitasPageState extends State<CalendarioCitasPage> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay = DateTime.now();
 
+  bool cargando = true;
+
+  @override
+  void initState() {
+    super.initState();
+    cargar();
+  }
+
+  Future<void> cargar() async {
+    await controller.cargarCitasDeSupabase();
+    setState(() => cargando = false);
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (cargando) {
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(title: Text("Calendario de citas")),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final result = await Navigator.push(
             context,
             MaterialPageRoute(
               builder: (_) => CrearCitaPage(
                 fechaInicial: _selectedDay!,
-                onSave: (cita) {
-                  setState(() {
-                    controller.agregarCita(cita);
-                  });
-                },
               ),
             ),
           );
+
+          if (result != null && result is Cita) {
+            await controller.agregarCita(result);
+            setState(() {});
+          }
         },
       ),
       body: Column(
@@ -63,57 +82,31 @@ class _CalendarioCitasPageState extends State<CalendarioCitasPage> {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(cita.nota ?? ""),
-                        SizedBox(width: 10),
-
-                        // BOTÓN EDITAR
                         IconButton(
                           icon: Icon(Icons.edit),
-                          onPressed: () {
-                            Navigator.push(
+                          onPressed: () async {
+                            final nueva = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (_) => CrearCitaPage(
                                   fechaInicial: cita.fecha,
                                   citaAEditar: cita,
-                                  onSave: (nueva) {
-                                    setState(() {
-                                      controller.editarCita(cita, nueva);
-                                    });
-                                  },
                                 ),
                               ),
                             );
+
+                            if (nueva != null && nueva is Cita) {
+                              await controller.editarCita(cita, nueva);
+                              setState(() {});
+                            }
                           },
                         ),
 
-                        // BOTÓN ELIMINAR
                         IconButton(
                           icon: Icon(Icons.delete, color: Colors.red),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                title: Text("Eliminar cita"),
-                                content: Text(
-                                    "¿Seguro que deseas eliminar esta cita?"),
-                                actions: [
-                                  TextButton(
-                                    child: Text("Cancelar"),
-                                    onPressed: () => Navigator.pop(context),
-                                  ),
-                                  TextButton(
-                                    child: Text("Eliminar"),
-                                    onPressed: () {
-                                      setState(() {
-                                        controller.eliminarCita(cita);
-                                      });
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            );
+                          onPressed: () async {
+                            await controller.eliminarCita(cita);
+                            setState(() {});
                           },
                         ),
                       ],

@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import '../models/cita.dart';
 
 class CrearCitaPage extends StatefulWidget {
-  final Function(Cita) onSave;
   final DateTime fechaInicial;
   final Cita? citaAEditar;
 
   CrearCitaPage({
-    required this.onSave,
     required this.fechaInicial,
     this.citaAEditar,
   });
@@ -27,7 +25,6 @@ class _CrearCitaPageState extends State<CrearCitaPage> {
   @override
   void initState() {
     super.initState();
-
     fechaSeleccionada = widget.fechaInicial;
 
     if (widget.citaAEditar != null) {
@@ -40,7 +37,6 @@ class _CrearCitaPageState extends State<CrearCitaPage> {
         hour: int.parse(partes[0]),
         minute: int.parse(partes[1]),
       );
-
       fechaSeleccionada = widget.citaAEditar!.fecha;
     }
   }
@@ -50,12 +46,13 @@ class _CrearCitaPageState extends State<CrearCitaPage> {
         servicioCtrl.text.isEmpty ||
         horaSeleccionada == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Completa todos los campos obligatorios")),
+        SnackBar(content: Text("Completa todos los campos")),
       );
       return;
     }
 
     final cita = Cita(
+      id: widget.citaAEditar?.id,
       cliente: clienteCtrl.text,
       servicio: servicioCtrl.text,
       nota: notaCtrl.text,
@@ -64,8 +61,7 @@ class _CrearCitaPageState extends State<CrearCitaPage> {
       fecha: fechaSeleccionada,
     );
 
-    widget.onSave(cita);
-    Navigator.pop(context);
+    Navigator.pop(context, cita);
   }
 
   @override
@@ -93,7 +89,6 @@ class _CrearCitaPageState extends State<CrearCitaPage> {
             ),
             SizedBox(height: 20),
 
-            // botón seleccionar hora
             Row(
               children: [
                 Text(horaSeleccionada == null

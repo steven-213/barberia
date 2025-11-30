@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatelessWidget {
   void abrirWhatsapp() async {
-  final Uri url = Uri.parse("https://wa.me/573134363492?text=Hola,%20quiero%20más%20información");
+  final Uri url = Uri.parse("https://wa.me/15551716544?text=Hola%2C%20quiero%20agendar%20una%20cita.");
 
   if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
     throw Exception('No se pudo abrir WhatsApp');
