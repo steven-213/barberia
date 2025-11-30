@@ -1,16 +1,12 @@
-# crud_barber
 
-A new Flutter project.
+# Proyecto barberia
 
-## Getting Started
+este Proyecto se conforma de cuatro partes :
+-la app flutter
+-la conexion de la app a supabase
+-la conexion de supabase a n8n
+-la conexion de n8n a la api de whatsapp
+ 
 
-This project is a starting point for a Flutter application.
+ lo mas dificil y por lo cual siento que aprendi mucho de este Proyecto fue la conexion y el flujo de n8n , pues aunque es un bot muy simple use el plan gratuito el cual no tiene muchas de las funcionalidades necesarias de un chatbot , por esa misma razon me costo tanto y hice maromas con los nodos para que quedara mas o menos como queria y funcionase
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
